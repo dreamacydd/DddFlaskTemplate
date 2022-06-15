@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    volumes:
+      - .:/usr/src/
+    ports:
+      - "5000:5000"
+  pg:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: hunter2
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/data
+      - ./data/flask_init.sql:/docker-entrypoint-initdb.d/1-flask-init.sql
